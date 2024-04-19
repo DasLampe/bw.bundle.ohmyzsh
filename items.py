@@ -15,19 +15,21 @@ for user in {key: value for (key, value) in node.metadata.get('users', {}).items
         'rev': 'master',
         'needs': [
             'user:{}'.format(user),
-        ]
+        ],
     }
 
     actions['chown_ohmyzsh_dir_for_{}'.format(user)] = {
         'command': 'chown -R {user} {dirname}'.format(user=user, dirname=dirname),
         'needs': [
             'git_deploy:{}'.format(dirname)
-        ]
+        ],
+        'interactive': False,
     }
 
     actions['chmod_ohmyzsh_for_{}'.format(user)] = {
         'command': 'chmod -R g-w,o-w {}'.format(dirname),
         'needs': [
             'git_deploy:{}'.format(dirname)
-        ]
+        ],
+        'interactive': False,
     }
